@@ -53,7 +53,7 @@ h2 {
 
 .cards {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
 }
 
@@ -116,4 +116,21 @@ h2 {
     padding: 20px;
     background-color: #1f3b5d;
     color: white;
+}
+
+@media (max-width: 700px) {
+    .site-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .menu {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    main {
+        width: 95%;
+    }
 }
