@@ -1,0 +1,119 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fb;
+    color: #222222;
+}
+
+.site-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #1f3b5d;
+    color: white;
+}
+
+.site-header h1 {
+    margin: 0;
+}
+
+.menu {
+    display: flex;
+    gap: 20px;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+}
+
+main {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+section {
+    margin-bottom: 50px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #d0d7e2;
+    border-radius: 10px;
+}
+
+.card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.featured {
+    border: 2px solid #5b3fd9;
+    background-color: #f1efff;
+}
+
+.trip-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 500px;
+}
+
+.trip-form input,
+.trip-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+}
+
+.trip-form input:focus,
+.trip-form select:focus {
+    outline: 2px solid #5b3fd9;
+}
+
+.trip-form button {
+    margin-top: 10px;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1f3b5d;
+    color: white;
+    cursor: pointer;
+}
+
+.trip-form button:hover {
+    background-color: #15283f;
+}
+
+#recomandari ul {
+    line-height: 1.8;
+}
+
+.site-footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #1f3b5d;
+    color: white;
+}
