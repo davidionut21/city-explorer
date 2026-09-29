@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Explorer</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header class="site-header">
+        <h1>City Explorer</h1>
+
+        <nav class="menu">
+            <a href="#destinatii">Destinatii</a>
+            <a href="#planifica">Planifica</a>
+            <a href="#recomandari">Recomandari</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <section id="destinatii">
+            <h2>Destinatii</h2>
+
+            <div class="cards">
+
+                <article class="card featured">
+                    <h3>Roma</h3>
+                    <p><strong>Tara:</strong> Italia</p>
+                    <p>Un oras plin de istorie, arhitectura impresionanta si obiective turistice celebre.</p>
+                    <p><strong>Durata recomandata:</strong> 4 zile</p>
+                </article>
+
+                <article class="card">
+                    <h3>Paris</h3>
+                    <p><strong>Tara:</strong> Franta</p>
+                    <p>Capitala Frantei este cunoscuta pentru Turnul Eiffel, muzee si bulevarde elegante.</p>
+                    <p><strong>Durata recomandata:</strong> 4 zile</p>
+                </article>
+
+                <article class="card">
+                    <h3>Barcelona</h3>
+                    <p><strong>Tara:</strong> Spania</p>
+                    <p>Un oras mediteranean cunoscut pentru arhitectura lui Gaudi, plaje si gastronomie.</p>
+                    <p><strong>Durata recomandata:</strong> 3 zile</p>
+                </article>
+
+                <article class="card">
+                    <h3>Viena</h3>
+                    <p><strong>Tara:</strong> Austria</p>
+                    <p>Un oras elegant, renumit pentru palate, muzica clasica si cafenelele traditionale.</p>
+                    <p><strong>Durata recomandata:</strong> 3 zile</p>
+                </article>
+
+                <article class="card">
+                    <h3>Lisabona</h3>
+                    <p><strong>Tara:</strong> Portugalia</p>
+                    <p>Capitala Portugaliei ofera strazi colorate, privelisti spectaculoase si o atmosfera relaxata.</p>
+                    <p><strong>Durata recomandata:</strong> 3 zile</p>
+                </article>
+
+            </div>
+        </section>
+
+        <section id="planifica">
+            <h2>Planifica</h2>
+
+            <form class="trip-form">
+
+                <label for="name">Nume</label>
+                <input id="name" name="name" type="text">
+
+                <label for="destination">Destinatie</label>
+                <select id="destination" name="destination">
+                    <option value="">Alege...</option>
+                    <option value="Roma">Roma</option>
+                    <option value="Paris">Paris</option>
+                    <option value="Barcelona">Barcelona</option>
+                    <option value="Viena">Viena</option>
+                    <option value="Lisabona">Lisabona</option>
+                </select>
+
+                <label for="days">Numar de zile</label>
+                <input id="days" name="days" type="number">
+
+                <button type="submit">Planifica excursia</button>
+
+            </form>
+        </section>
+
+        <section id="recomandari">
+            <h2>Recomandari</h2>
+
+            <ul>
+                <li>Rezerva cazarea din timp pentru a obtine preturi mai bune.</li>
+                <li>Verifica programul obiectivelor turistice inainte de vizita.</li>
+                <li>Foloseste transportul public pentru deplasari rapide prin oras.</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>David Dumitrache, 2026</p>
+    </footer>
+
+</body>
+</html>
