@@ -13,7 +13,10 @@ export const formatDestinatie = ({ oras, tara, zile, vizitat }) =>
 
 export const numarPeTara = (list) =>
   list.reduce(
-    (acc, { tara }) => ({ ...acc, [tara]: (acc[tara] ?? 0) + 1 }),
+    (acc, { tara }) => ({
+      ...acc,
+      [tara]: (acc[tara] ?? 0) + 1,
+    }),
     {}
   )
 
@@ -25,8 +28,13 @@ export const marcheazaVizitat = (list, id) =>
     d.id === id ? { ...d, vizitat: !d.vizitat } : d
   )
 
-export const adaugaDestinatie = (list, d) =>
-  [...list, d]
+export const adaugaDestinatie = (list, destinatie) =>
+  [...list, destinatie]
 
 export const stergeDestinatie = (list, id) =>
   list.filter((d) => d.id !== id)
+
+export const nr = (n, cuvant) =>
+  n % 100 >= 20
+    ? `${n} de ${cuvant}`
+    : `${n} ${cuvant}`

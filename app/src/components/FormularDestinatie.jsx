@@ -1,60 +1,143 @@
 
 import { useState } from 'react'
 
-export default function FormularDestinatie({ onAdd }) {
-  const [oras, setOras] = useState('')
-  const [tara, setTara] = useState('')
-  const [zile, setZile] = useState('')
+export function valideaza(valori) {
+  const erori = {}
 
-  function handleSubmit(event) {
+  if (valori.oras.trim().length < 2) {
+    erori.oras = 'Orașul are cel puțin două caractere.'
+  }
+
+  if (valori.tara.trim() === '') {
+    erori.tara = 'Țara este obligatorie.'
+  }
+
+  const zile = Number(valori.zile)
+
+  if (
+    valori.zile.trim() === '' ||
+    !Number.isFinite(zile) ||
+    zile < 1 ||
+    zile > 30
+  ) {
+    erori.zile = 'Numărul de zile este între 1 și 30.'
+  }
+
+  return erori
+}
+
+export default function FormularDestinatie({
+  onAdd,
+  seTrimite,
+}) {
+  const [valori, setValori] = useState({
+    oras: '',
+    tara: '',
+    zile: '',
+  })
+
+  const [erori, setErori] = useState({})
+
+  function handleChange(event) {
+    const { name, value } = event.target
+
+    setValori((curent) => ({
+      ...curent,
+      [name]: value,
+    }))
+  }
+
+  async function handleSubmit(event) {
     event.preventDefault()
 
-    if (!oras.trim() || !tara.trim() || !zile || Number(zile) < 1) {
+    const greseli = valideaza(valori)
+    setErori(greseli)
+
+    if (Object.keys(greseli).length > 0) {
       return
     }
 
-    onAdd({
-      id: crypto.randomUUID(),
-      oras: oras.trim(),
-      tara: tara.trim(),
-      zile: Number(zile),
+    const reusit = await onAdd({
+      oras: valori.oras.trim(),
+      tara: valori.tara.trim(),
+      zile: Number(valori.zile),
       vizitat: false,
     })
 
-    setOras('')
-    setTara('')
-    setZile('')
+    if (reusit) {
+      setValori({
+        oras: '',
+        tara: '',
+        zile: '',
+      })
+
+      setErori({})
+    }
   }
 
   return (
-    <form className="formular" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Oraș"
-        aria-label="Oraș"
-        value={oras}
-        onChange={(event) => setOras(event.target.value)}
-        required
-      />
-      <input
-        type="text"
-        placeholder="Țară"
-        aria-label="Țară"
-        value={tara}
-        onChange={(event) => setTara(event.target.value)}
-        required
-      />
-      <input
-        type="number"
-        placeholder="Zile"
-        aria-label="Zile"
-        min="1"
-        step="1"
-        value={zile}
-        onChange={(event) => setZile(event.target.value)}
-        required
-      />
-      <button type="submit">Adaugă</button>
+    <form
+      className="formular"
+      onSubmit={handleSubmit}
+      noValidate
+    >
+      <div className="camp">
+        <input
+          type="text"
+          name="oras"
+          placeholder="Oraș"
+          aria-label="Oraș"
+          value={valori.oras}
+          onChange={handleChange}
+          className={erori.oras ? 'invalid' : ''}
+        />
+
+        {erori.oras && (
+          <p className="eroare-camp">
+            {erori.oras}
+          </p>
+        )}
+      </div>
+
+      <div className="camp">
+        <input
+          type="text"
+          name="tara"
+          placeholder="Țară"
+          aria-label="Țară"
+          value={valori.tara}
+          onChange={handleChange}
+          className={erori.tara ? 'invalid' : ''}
+        />
+
+        {erori.tara && (
+          <p className="eroare-camp">
+            {erori.tara}
+          </p>
+        )}
+      </div>
+
+      <div className="camp">
+        <input
+          type="number"
+          name="zile"
+          placeholder="Zile"
+          aria-label="Zile"
+          value={valori.zile}
+          onChange={handleChange}
+          className={erori.zile ? 'invalid' : ''}
+        />
+
+        {erori.zile && (
+          <p className="eroare-camp">
+            {erori.zile}
+          </p>
+        )}
+      </div>
+
+      <button type="submit" disabled={seTrimite}>
+        {seTrimite ? 'Se trimite...' : 'Adaugă'}
+      </button>
     </form>
   )
 }
