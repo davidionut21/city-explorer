@@ -1,31 +1,27 @@
-
 import { useEffect, useState } from 'react'
+import { getStatistici } from '../api/statistici.js'
 
-export default function PanouStatistici() {
-  const [destinatii, setDestinatii] = useState([])
+export default function PanouStatistici({
+  actualizare = 0,
+}) {
+  const [prag, setPrag] = useState('3')
+  const [tara, setTara] = useState('')
+  const [statistici, setStatistici] = useState(null)
   const [incarcare, setIncarcare] = useState(true)
   const [eroare, setEroare] = useState(null)
-  const [prag, setPrag] = useState('3')
 
   useEffect(() => {
     let activ = true
 
     async function incarca() {
+      setIncarcare(true)
+      setEroare(null)
+
       try {
-        const response = await fetch(
-          'http://localhost:3001/destinatii'
-        )
-
-        if (!response.ok) {
-          throw new Error(
-            `Serverul a răspuns cu ${response.status}`
-          )
-        }
-
-        const date = await response.json()
+        const date = await getStatistici(prag, tara)
 
         if (activ) {
-          setDestinatii(date)
+          setStatistici(date)
         }
       } catch (error) {
         if (activ) {
@@ -43,36 +39,7 @@ export default function PanouStatistici() {
     return () => {
       activ = false
     }
-  }, [])
-
-  if (incarcare) {
-    return (
-      <p className="stare">
-        Se încarcă statisticile...
-      </p>
-    )
-  }
-
-  if (eroare) {
-    return (
-      <p className="stare eroare">
-        Statistici indisponibile: {eroare}
-      </p>
-    )
-  }
-
-  const filtrate = destinatii.filter(
-    (d) => d.zile >= Number(prag)
-  )
-
-  const totalZile = filtrate.reduce(
-    (suma, d) => suma + d.zile,
-    0
-  )
-
-  const medie = filtrate.length === 0
-    ? 0
-    : totalZile / filtrate.length
+  }, [prag, tara, actualizare])
 
   return (
     <section className="panou">
@@ -82,6 +49,7 @@ export default function PanouStatistici() {
         Cel puțin{' '}
         <input
           type="number"
+          min="1"
           value={prag}
           onChange={(event) =>
             setPrag(event.target.value)
@@ -90,17 +58,45 @@ export default function PanouStatistici() {
         zile
       </label>
 
-      {filtrate.length === 0 ? (
-        <p className="gol">
-          Nicio destinație cu cel puțin {prag} zile.
+      {' '}
+
+      <label>
+        Țara{' '}
+        <input
+          type="text"
+          placeholder="Toate"
+          value={tara}
+          onChange={(event) =>
+            setTara(event.target.value)
+          }
+        />
+      </label>
+
+      {incarcare ? (
+        <p className="stare">
+          Se încarcă statisticile...
         </p>
-      ) : (
+      ) : eroare ? (
+        <p className="stare eroare">
+          Statistici indisponibile: {eroare}
+        </p>
+      ) : statistici && statistici.destinatii === 0 ? (
+        <p className="gol">
+          Nicio destinație pentru criteriile selectate.
+        </p>
+      ) : statistici ? (
         <ul>
-          <li>Destinații: {filtrate.length}</li>
-          <li>Total zile: {totalZile}</li>
-          <li>Media: {medie.toFixed(1)} zile</li>
+          <li>
+            Destinații: {statistici.destinatii}
+          </li>
+          <li>
+            Total zile: {statistici.zile}
+          </li>
+          <li>
+            Media: {statistici.medie.toFixed(1)} zile
+          </li>
         </ul>
-      )}
+      ) : null}
     </section>
   )
 }

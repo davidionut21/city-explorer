@@ -1,4 +1,3 @@
-
 import { useState } from 'react'
 
 export function valideaza(valori) {
@@ -16,7 +15,7 @@ export function valideaza(valori) {
 
   if (
     valori.zile.trim() === '' ||
-    !Number.isFinite(zile) ||
+    !Number.isInteger(zile) ||
     zile < 1 ||
     zile > 30
   ) {
